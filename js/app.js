@@ -11,7 +11,7 @@ class Pet {
 	}
 };
 
-const tomagotchi = new Pet("leeroy", "male", 0, 0, 0, 0);
+const tomagotchi = new Pet("Shy Guy", "Male", 0, 0, 0, 0);
 console.log(tomagotchi);
 
 
