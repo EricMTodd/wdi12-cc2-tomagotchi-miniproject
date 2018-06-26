@@ -20,8 +20,11 @@ class Pet {
 	}
 };
 
-const tomagotchi = new Pet("Shy Guy", "Male", 3, 4, 2, 6);
+// This is a list of pets to choose from. One for now.
+const tomagotchi = new Pet("", "Male", 3, 4, 2, 6);
 console.log(tomagotchi);
+
+tomagotchi.name = prompt("What's your new pet's name?" , "Shy Guy");
 
 // Global variables for ease of access to specific HTML elements.
 let age = tomagotchi.age;
