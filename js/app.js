@@ -24,17 +24,17 @@ const tomagotchi = new Pet("Shy Guy", "Male", 3, 4, 2, 6);
 console.log(tomagotchi);
 
 // Global variables for ease of access to specific HTML elements.
-age = tomagotchi.age;
-fatigue = tomagotchi.fatigue;
-hunger = tomagotchi.hunger;
-boredom = tomagotchi.boredom;
+let age = tomagotchi.age;
+let fatigue = tomagotchi.fatigue;
+let hunger = tomagotchi.hunger;
+let boredom = tomagotchi.boredom;
 
 $feed = $("#feed");
 $lightSwitch = $("#lightSwitch");
 $play = $("#play");
 
 // Starting gauges representing various status effects.
-$("#age").text(`A: ${tomagotchi.age}`);
+$("#age").text(`A: ${age}`);
 $("#hunger").text(`H: ${hunger}/10`);
 $("#fatigue").text(`F: ${tomagotchi.fatigue}/10`);
 $("#boredom").text(`B: ${tomagotchi.boredom}/10`);
@@ -45,7 +45,26 @@ $feed.on("click", () => {
 	$("#hunger").text(`H: ${hunger}/10`);
 });
 
+let lightToggle = false;
+$lightSwitch.on("click", () => {
+	if (lightToggle === false) {
+		$("body").css("background-color", "black");
+		$("li").css("color", "white");
+		$("#petImg").attr("src", "");
+		lightToggle = true;
+	} else {
+		$("body").css("background-color", "orange");
+		$("li").css("color", "black");
+		$("#petImg").attr("src", "images/Shy_Guy.png");
+		lightToggle = false;
+	}
+	
+});
 
+$play.on("click", () => {
+	boredom--;
+	$("#boredom").text(`B: ${boredom}/10`);
+});
 
 
 
