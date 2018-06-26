@@ -21,16 +21,18 @@ class Pet {
 };
 
 // This is a list of pets to choose from. One for now.
-const tomagotchi = new Pet("", "Male", 3, 4, 2, 6);
+const tomagotchi = new Pet("", "Male", 1, 4, 2, 6);
 console.log(tomagotchi);
 
 tomagotchi.name = prompt("What's your new pet's name?" , "Shy Guy");
 
 // Global variables for ease of access to specific HTML elements.
+let petName = tomagotchi.name;
 let age = tomagotchi.age;
 let fatigue = tomagotchi.fatigue;
 let hunger = tomagotchi.hunger;
 let boredom = tomagotchi.boredom;
+let minute = 60000;
 
 $feed = $("#feed");
 $lightSwitch = $("#lightSwitch");
@@ -41,6 +43,19 @@ $("#age").text(`A: ${age}`);
 $("#hunger").text(`H: ${hunger}/10`);
 $("#fatigue").text(`F: ${tomagotchi.fatigue}/10`);
 $("#boredom").text(`B: ${tomagotchi.boredom}/10`);
+
+// Functions that determine how long it takes for gauges to max out.
+
+// Timer that counts in seconds --> modified to increase tomagotchi's age
+const timeLapse = () => {
+	age++;
+	// console.log(`${petName} is ${age}.`);
+	$("#age").text(`A: ${age}`)
+		if (age === 5) {
+		alert(`${petName} has grown old and crossed the rainbow bridge`);
+	}
+};
+const timer = setInterval(timeLapse, minute * 60);
 
 // Button interaction to feed, toggle lights and play.
 $feed.on("click", () => {
