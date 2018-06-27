@@ -41,7 +41,6 @@ let age = tomagotchi.age;
 let fatigue = tomagotchi.fatigue;
 let hunger = tomagotchi.hunger;
 let boredom = tomagotchi.boredom;
-let conscious = true;
 let light = true;
 
 // Timeframe variables
@@ -104,6 +103,8 @@ const timeLapse = () => {
 
 		// Hour display and win condition.
 		if (hourCounter > 3) {
+			$(".activePet").stop();
+			$("img").attr("src", "images/tombstone.png");
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
 			alert(`Well Done! ${petName} lived a long and happy life in your care. Like all wonderful pets however, ${petName} must also cross the rainbow bridge.`);
@@ -121,13 +122,15 @@ const timeLapse = () => {
 	};	
 };
 
-const timer = setInterval(timeLapse, 1000);
+const timer = setInterval(timeLapse, 10);
 
 // Fail state conditions
 const failState = () => {
 	// Failstate simulating hunger.
 	if (minuteCounter % 5 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
 		if (hunger === hungerMax) {
+			$(".activePet").stop();
+			$("img").attr("src", "images/tombstone.png");
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
 			alert(`Game Over! ${petName} starved to death.`);
@@ -140,6 +143,8 @@ const failState = () => {
 	// Failstate simulating fatigue and exhaustion.
 	if (minuteCounter % 15 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
 		if (fatigue === fatigueMax) {
+			$(".activePet").stop();
+			$("img").attr("src", "images/tombstone.png");
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
 			alert(`Game Over! ${petName} died from exhaustion.`);
@@ -152,6 +157,8 @@ const failState = () => {
 	// Failstate simulating boredom.
 	if (minuteCounter % 3 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
 		if (boredom === boredomMax) {
+			$(".activePet").stop();
+			$("img").attr("src", "images/tombstone.png");
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
 			alert(`Game Over! ${petName} died from sheer boredom.`);
@@ -178,6 +185,26 @@ const lightToggle = () => {
 		light = true;
 	}
 };
+
+// These fucntions control the movement of the tomagotchi.
+function moveRight() {
+	$("#petImg").css("-moz-transform","scaleX(1)").css("-o-transform","scaleX(1)").css("-webkit-transform","scaleX(1)").css("transform","scaleX(1)");
+	$(".activePet").animate({
+		left: "+=380"
+	}, 3000, function() {
+		moveLeft();
+	});
+};
+function moveLeft() {
+	$("#petImg").css("-moz-transform","scaleX(-1)").css("-o-transform","scaleX(-1)").css("-webkit-transform","scaleX(-1)").css("transform","scaleX(-1)").css("filter","FlipH").css("-ms-filte","'FlipH'");
+	$(".activePet").animate({
+		left: "-=380"
+	}, 3000, function() {
+		setTimeout(moveRight, 50);
+	});
+};
+
+setTimeout(moveRight, 50);
 
 
 // PLAYER INTERACTION //
