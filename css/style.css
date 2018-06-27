@@ -1,8 +1,66 @@
 body {
 	background-color: orange;
 }
+#gameWindow {
+	background-color: white;
+	max-width: 640px;
+	max-height: 360px;
+	min-width: 640px;
+	min-height: 360px;
+	margin: auto;
+	border: 6px solid gray;
+	border-radius: 25px;
+}
+#interaction {
+	max-width: 640px;
+	max-height: 600px;
+	margin: auto;
+	padding-left: 80px;
+}
+#statsTracking {
+	max-width: 640px;
+	max-height: 600px;
+	margin: auto;
+	padding-left: 200px;
+	padding-top: 30px;
+}
+#clock {
+	max-width: 640px;
+	max-height: 600px;
+	margin: auto;
+	padding-left: 248px;
+	padding-top: 6px;
+}
+#namePlate {
+	max-width: 640px;
+	max-height: 600px;
+	margin: auto;
+	padding-left: 96px;
+}
+div {
+	font-family: Arial;
+}
+button {
+	max-width: 640px;
+	margin: 6px 32px;
+	font-size: 18px;
+	border-radius: 6px;
+}
 li {
 	list-style-type: none;
 	display: inline-block;
 	padding: 6px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

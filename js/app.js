@@ -71,7 +71,7 @@ $("#fatigue").text(`F: ${fatigue}/10`);
 $("#boredom").text(`B: ${boredom}/10`);
 
 // Displays the chosen name of the tomagotchi.
-$(".activePet").prepend(`<div>${petName}</div>`);
+$("#namePlate").text(`${petName}`);
 
 // Displays a stopwatch that counts up to 4 total hours of gameplay in one instance.
 $("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
@@ -165,14 +165,16 @@ const failState = () => {
 // Function that turns the lights on and off by altering the truthy/falsey statement of the variable light.
 const lightToggle = () => {
 	if (light === true) {
-		$("body").css("background-color", "black");
+		$("#gameWindow").css("background-color", "black");
 		$("li").css("color", "white");
-		$("#petImg").attr("src", "");
+		$("#clock").css("color", "white");
+		$("#petImg").css("opacity", 0);
 		light = false;
 	} else {
-		$("body").css("background-color", "orange");
+		$("#gameWindow").css("background-color", "white");
 		$("li").css("color", "black");
-		$("#petImg").attr("src", "images/Shy_Guy.png");
+		$("#clock").css("color", "black");
+		$("#petImg").css("opacity", 1);
 		light = true;
 	}
 };
