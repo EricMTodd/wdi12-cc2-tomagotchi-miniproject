@@ -122,7 +122,7 @@ const timeLapse = () => {
 	};	
 };
 
-const timer = setInterval(timeLapse, 10);
+const timer = setInterval(timeLapse, 1000);
 
 // Fail state conditions
 const failState = () => {
