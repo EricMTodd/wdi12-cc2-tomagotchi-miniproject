@@ -7,8 +7,7 @@ console.log("JavaScript is running...");
 // Most Functional
 
 
-// Create a game object that will reference tomagotchi's created with the class template using the palyer input. (Maybe).
-// Style the fuck out of it.
+// Create a reset function.
 
 // Developer note: Everything is always subject to change at any time for any reason.
 
@@ -107,24 +106,29 @@ const timeLapse = () => {
 			$("img").attr("src", "images/tombstone.png");
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
-			alert(`Well Done! ${petName} lived a long and happy life in your care. Like all wonderful pets however, ${petName} must also cross the rainbow bridge.`);
+			$("#alerts").append(`<br>Well Done! ${petName} lived a long and happy life in your care. Like all wonderful pets however, ${petName} must also cross the rainbow bridge.`);
 	};
 
 		// Conditions that will allow the tomagotchi to rest while the lights are off. Once it is fully rested, the lights will come back on and normal functions resume.
 		if (light === false) {
 			if (fatigue === fatigueMin) {
 				lightToggle();
-				alert(`${petName} is all rested up!`);
+				$("#alerts").append(`<br>${petName} is all rested up!`);
 			} else {
 				fatigue--;
 				$("#fatigue").text(`F: ${fatigue}/10`);
 			}
+	};
+
+		// Function that will clear the alerts panel after 3 seconds.
+		if (secondCounter % 3 === 0 && secondCounter !== 1 && secondCounter !== 0) {
+			$("#alerts").text("");
 	};	
 };
 
 const timer = setInterval(timeLapse, 1000);
 
-// Fail state conditions
+// Fail state conditions.
 const failState = () => {
 	// Failstate simulating hunger.
 	if (minuteCounter % 5 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
@@ -133,7 +137,7 @@ const failState = () => {
 			$("img").attr("src", "images/tombstone.png");
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
-			alert(`Game Over! ${petName} starved to death.`);
+			$("#alerts").append(`<br>Game Over! ${petName} starved to death.`);
 		} else {
 			hunger++;
 			$("#hunger").text(`H: ${hunger}/10`);
@@ -147,7 +151,7 @@ const failState = () => {
 			$("img").attr("src", "images/tombstone.png");
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
-			alert(`Game Over! ${petName} died from exhaustion.`);
+			$("#alerts").append(`<br>Game Over! ${petName} died from exhaustion.`);
 		} else {
 			fatigue++;
 			$("#fatigue").text(`F: ${fatigue}/10`);
@@ -161,7 +165,7 @@ const failState = () => {
 			$("img").attr("src", "images/tombstone.png");
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
-			alert(`Game Over! ${petName} died from sheer boredom.`);
+			$("#alerts").append(`<br>Game Over! ${petName} died from sheer boredom.`);
 		}  else {
 			boredom++;
 			$("#boredom").text(`B: ${boredom}/10`);
@@ -211,7 +215,7 @@ setTimeout(moveRight, 50);
 // Button to reduce hunger levels.
 $feed.on("click", () => {
 	if (hunger === hungerMin)  {
-			alert(`${petName} is full!`);
+			$("#alerts").append(`<br>${petName} is full!`);
 		} else {
 		hunger--;
 		$("#hunger").text(`H: ${hunger}/10`);
@@ -225,13 +229,21 @@ $lightSwitch.on("click", () => {
 
 // Button to reduce boredom levels.
 $play.on("click", () => {
+		if (fatigue === fatigueMax) {
+			$(".activePet").stop();
+			$("img").attr("src", "images/tombstone.png");
+			clearInterval(timer);
+			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
+			$("#alerts").append(`<br>Game Over! ${petName} died from exhaustion.`);
+	}
+
 	if (boredom === boredomMin) {
-			alert(`${petName} can't keep up that kind of pace!`);
+			$("#alerts").append(`<br>${petName} can't keep up that kind of pace!`);
 			fatigue++;
 			$("#fatigue").text(`F: ${fatigue}/10`);
 		} else {
-		boredom--;
-		$("#boredom").text(`B: ${boredom}/10`);
+			boredom--;
+			$("#boredom").text(`B: ${boredom}/10`);
 	}
 });
 

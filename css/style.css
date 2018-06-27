@@ -46,6 +46,8 @@ body {
 	margin: auto;
 	border: 6px solid gray;
 	border-radius: 25px;
+	padding: 0px 24px;
+	text-align: center;
 }
 .activePet {
 	position: relative;
