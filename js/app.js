@@ -6,9 +6,8 @@ console.log("JavaScript is running...");
 // Creative
 // Most Functional
 
-// Create everything that makes the game run.
-// Create a game object that will run the game, make the game more efficient.
-// Create a game object that will reference tomagotchi's created with the class template using the palyer input.
+
+// Create a game object that will reference tomagotchi's created with the class template using the palyer input. (Maybe).
 // Style the fuck out of it.
 
 // Developer note: Everything is always subject to change at any time for any reason.
@@ -43,6 +42,7 @@ let fatigue = tomagotchi.fatigue;
 let hunger = tomagotchi.hunger;
 let boredom = tomagotchi.boredom;
 let conscious = true;
+let light = true;
 
 // Timeframe variables
 let secondCounter = 0;
@@ -80,14 +80,19 @@ $("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}
 // FUNCTIONS //
 // Global stopwatch timer to control status effects at specific intervals that also causes the tomagotchi to age.
 const timeLapse = () => {
+	// Catalyst for stopwatch.
 	secondCounter++;
 	$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
+
+		// Second display that also invokes the failStates.
 		if (secondCounter > 60) {
 			minuteCounter++;
 			failState();
 			secondCounter = 0;
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
-	}
+	};
+
+		// Minute display.
 		if (minuteCounter > 60) {
 			hourCounter++;
 			age++;
@@ -95,12 +100,25 @@ const timeLapse = () => {
 			minuteCounter = 0;
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
 			failState();
-	}
+	};
+
+		// Hour display and win condition.
 		if (hourCounter > 3) {
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
 			alert(`Well Done! ${petName} lived a long and happy life in your care. Like all wonderful pets however, ${petName} must also cross the rainbow bridge.`);
-		}
+	};
+
+		// Conditions that will allow the tomagotchi to rest while the lights are off. Once it is fully rested, the lights will come back on and normal functions resume.
+		if (light === false) {
+			if (fatigue === fatigueMin) {
+				lightToggle();
+				alert(`${petName} is all rested up!`);
+			} else {
+				fatigue--;
+				$("#fatigue").text(`F: ${fatigue}/10`);
+			}
+	};	
 };
 
 const timer = setInterval(timeLapse, 1000);
@@ -108,7 +126,7 @@ const timer = setInterval(timeLapse, 1000);
 // Fail state conditions
 const failState = () => {
 	// Failstate simulating hunger.
-	if (minuteCounter % 15 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
+	if (minuteCounter % 5 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
 		if (hunger === hungerMax) {
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
@@ -120,13 +138,11 @@ const failState = () => {
 	};
 
 	// Failstate simulating fatigue and exhaustion.
-	if (minuteCounter % 30 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
+	if (minuteCounter % 15 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
 		if (fatigue === fatigueMax) {
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
 			alert(`Game Over! ${petName} died from exhaustion.`);
-		} else if (fatigue === fatigueMin) {
-			alert(`${petName} is all rested up!`);
 		} else {
 			fatigue++;
 			$("#fatigue").text(`F: ${fatigue}/10`);
@@ -146,6 +162,21 @@ const failState = () => {
 	};
 };
 
+// Function that turns the lights on and off by altering the truthy/falsey statement of the variable light.
+const lightToggle = () => {
+	if (light === true) {
+		$("body").css("background-color", "black");
+		$("li").css("color", "white");
+		$("#petImg").attr("src", "");
+		light = false;
+	} else {
+		$("body").css("background-color", "orange");
+		$("li").css("color", "black");
+		$("#petImg").attr("src", "images/Shy_Guy.png");
+		light = true;
+	}
+};
+
 
 // PLAYER INTERACTION //
 // Button to reduce hunger levels.
@@ -159,19 +190,8 @@ $feed.on("click", () => {
 });
 
 // Button to switch lights on and off.
-let lightToggle = false;
 $lightSwitch.on("click", () => {
-	if (lightToggle === false) {
-		$("body").css("background-color", "black");
-		$("li").css("color", "white");
-		$("#petImg").attr("src", "");
-		lightToggle = true;
-	} else {
-		$("body").css("background-color", "orange");
-		$("li").css("color", "black");
-		$("#petImg").attr("src", "images/Shy_Guy.png");
-		lightToggle = false;
-	}
+	lightToggle();	
 });
 
 // Button to reduce boredom levels.
