@@ -26,11 +26,10 @@ class Pet {
 };
 
 // This is a list of pets to choose from. One for now.
-const tomagotchi = new Pet("", "Male", 1, 1, 1, 1);
+const tomagotchi = new Pet("", "Male", 1, 5, 7, 3);
 
 // User input for petName.
 tomagotchi.name = prompt("What's your new pet's name?", "Shy Guy");
-
 
 
 // GLOBAL VARIABLES //
@@ -51,7 +50,7 @@ let hourCounter = 0;
 ageMin = 0;
 ageMax = 5;
 fatigueMin = 0;
-fatigueMax = 10;
+fatigueMax = 9;
 hungerMin = 0;
 hungerMax = 10;
 boredomMin = 0;
@@ -103,9 +102,11 @@ const timeLapse = () => {
 		// Hour display and win condition.
 		if (hourCounter > 3) {
 			$(".activePet").stop();
+			restart();
 			$("img").attr("src", "images/tombstone.png");
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
+			$("#alerts").text("");
 			$("#alerts").append(`<br>Well Done! ${petName} lived a long and happy life in your care. Like all wonderful pets however, ${petName} must also cross the rainbow bridge.`);
 	};
 
@@ -113,16 +114,12 @@ const timeLapse = () => {
 		if (light === false) {
 			if (fatigue === fatigueMin) {
 				lightToggle();
+				$("#alerts").text("");
 				$("#alerts").append(`<br>${petName} is all rested up!`);
 			} else {
 				fatigue--;
 				$("#fatigue").text(`F: ${fatigue}/10`);
 			}
-	};
-
-		// Function that will clear the alerts panel after 3 seconds.
-		if (secondCounter % 3 === 0 && secondCounter !== 1 && secondCounter !== 0) {
-			$("#alerts").text("");
 	};	
 };
 
@@ -134,9 +131,11 @@ const failState = () => {
 	if (minuteCounter % 5 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
 		if (hunger === hungerMax) {
 			$(".activePet").stop();
+			restart();
 			$("img").attr("src", "images/tombstone.png");
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
+			$("#alerts").text("");
 			$("#alerts").append(`<br>Game Over! ${petName} starved to death.`);
 		} else {
 			hunger++;
@@ -145,12 +144,14 @@ const failState = () => {
 	};
 
 	// Failstate simulating fatigue and exhaustion.
-	if (minuteCounter % 15 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
+	if (minuteCounter % 7 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
 		if (fatigue === fatigueMax) {
 			$(".activePet").stop();
+			restart();
 			$("img").attr("src", "images/tombstone.png");
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
+			$("#alerts").text("");
 			$("#alerts").append(`<br>Game Over! ${petName} died from exhaustion.`);
 		} else {
 			fatigue++;
@@ -162,9 +163,11 @@ const failState = () => {
 	if (minuteCounter % 3 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
 		if (boredom === boredomMax) {
 			$(".activePet").stop();
+			restart();
 			$("img").attr("src", "images/tombstone.png");
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
+			$("#alerts").text("");
 			$("#alerts").append(`<br>Game Over! ${petName} died from sheer boredom.`);
 		}  else {
 			boredom++;
@@ -190,8 +193,8 @@ const lightToggle = () => {
 	}
 };
 
-// These fucntions control the movement of the tomagotchi.
-function moveRight() {
+// These fucntions control the movement of the tomagotchi. Credit -- Benjamin Kaplan + Ryan Flehraty.
+const moveRight = () => {
 	$("#petImg").css("-moz-transform","scaleX(1)").css("-o-transform","scaleX(1)").css("-webkit-transform","scaleX(1)").css("transform","scaleX(1)");
 	$(".activePet").animate({
 		left: "+=380"
@@ -199,7 +202,7 @@ function moveRight() {
 		moveLeft();
 	});
 };
-function moveLeft() {
+const moveLeft = () => {
 	$("#petImg").css("-moz-transform","scaleX(-1)").css("-o-transform","scaleX(-1)").css("-webkit-transform","scaleX(-1)").css("transform","scaleX(-1)").css("filter","FlipH").css("-ms-filte","'FlipH'");
 	$(".activePet").animate({
 		left: "-=380"
@@ -210,11 +213,23 @@ function moveLeft() {
 
 setTimeout(moveRight, 50);
 
+// Upon any failstate, player interaction buttons are replaced with a button that will refresh the page.
+const restart = () => {
+		$feed.off();
+		$play.off();
+		$lightSwitch.off();
+		$lightSwitch.text(`Restart`)
+		$lightSwitch.on("click", () => {
+		window.location.reload();	
+	});	
+};
+
 
 // PLAYER INTERACTION //
 // Button to reduce hunger levels.
 $feed.on("click", () => {
 	if (hunger === hungerMin)  {
+			$("#alerts").text("");
 			$("#alerts").append(`<br>${petName} is full!`);
 		} else {
 		hunger--;
@@ -231,13 +246,16 @@ $lightSwitch.on("click", () => {
 $play.on("click", () => {
 		if (fatigue === fatigueMax) {
 			$(".activePet").stop();
+			restart();
 			$("img").attr("src", "images/tombstone.png");
 			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
+			$("#alerts").text("");
 			$("#alerts").append(`<br>Game Over! ${petName} died from exhaustion.`);
 	}
 
 	if (boredom === boredomMin) {
+			$("#alerts").text("");
 			$("#alerts").append(`<br>${petName} can't keep up that kind of pace!`);
 			fatigue++;
 			$("#fatigue").text(`F: ${fatigue}/10`);

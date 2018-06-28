@@ -40,9 +40,9 @@ body {
 #info {
 	background-color: white;
 	max-width: 640px;
-	max-height: 360px;
+	max-height: 240px;
 	min-width: 640px;
-	min-height: 290px;
+	min-height: 240px;
 	margin: auto;
 	border: 6px solid gray;
 	border-radius: 25px;
