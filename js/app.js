@@ -102,12 +102,12 @@ const timeLapse = () => {
 		// Hour display and win condition.
 		if (hourCounter > 3) {
 			$(".activePet").stop();
-			restart();
 			$("img").attr("src", "images/tombstone.png");
-			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
 			$("#alerts").text("");
 			$("#alerts").append(`<br>Well Done! ${petName} lived a long and happy life in your care. Like all wonderful pets however, ${petName} must also cross the rainbow bridge.`);
+			clearInterval(timer);
+			restart();
 	};
 
 		// Conditions that will allow the tomagotchi to rest while the lights are off. Once it is fully rested, the lights will come back on and normal functions resume.
@@ -131,12 +131,12 @@ const failState = () => {
 	if (minuteCounter % 5 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
 		if (hunger === hungerMax) {
 			$(".activePet").stop();
-			restart();
 			$("img").attr("src", "images/tombstone.png");
-			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
 			$("#alerts").text("");
 			$("#alerts").append(`<br>Game Over! ${petName} starved to death.`);
+			clearInterval(timer);
+			restart();
 		} else {
 			hunger++;
 			$("#hunger").text(`H: ${hunger}/10`);
@@ -147,12 +147,12 @@ const failState = () => {
 	if (minuteCounter % 7 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
 		if (fatigue === fatigueMax) {
 			$(".activePet").stop();
-			restart();
 			$("img").attr("src", "images/tombstone.png");
-			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
 			$("#alerts").text("");
 			$("#alerts").append(`<br>Game Over! ${petName} died from exhaustion.`);
+			clearInterval(timer);
+			restart();
 		} else {
 			fatigue++;
 			$("#fatigue").text(`F: ${fatigue}/10`);
@@ -163,12 +163,12 @@ const failState = () => {
 	if (minuteCounter % 3 === 0 && minuteCounter !== 1 && minuteCounter !== 0) {
 		if (boredom === boredomMax) {
 			$(".activePet").stop();
-			restart();
 			$("img").attr("src", "images/tombstone.png");
-			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
 			$("#alerts").text("");
 			$("#alerts").append(`<br>Game Over! ${petName} died from sheer boredom.`);
+			clearInterval(timer);
+			restart();
 		}  else {
 			boredom++;
 			$("#boredom").text(`B: ${boredom}/10`);
@@ -247,12 +247,12 @@ $lightSwitch.on("click", () => {
 $play.on("click", () => {
 		if (fatigue === fatigueMax) {
 			$(".activePet").stop();
-			restart();
 			$("img").attr("src", "images/tombstone.png");
-			clearInterval(timer);
 			$("#clock").text(`Time Elapsed: ${hourCounter}:${minuteCounter}:${secondCounter}`);
 			$("#alerts").text("");
 			$("#alerts").append(`<br>Game Over! ${petName} died from exhaustion.`);
+			clearInterval(timer);
+			restart();
 	}
 
 	if (boredom === boredomMin) {
