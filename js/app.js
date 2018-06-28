@@ -215,6 +215,7 @@ setTimeout(moveRight, 50);
 
 // Upon any failstate, player interaction buttons are replaced with a button that will refresh the page.
 const restart = () => {
+	$("#petImg").css("-moz-transform","scaleX(1)").css("-o-transform","scaleX(1)").css("-webkit-transform","scaleX(1)").css("transform","scaleX(1)");
 		$feed.off();
 		$play.off();
 		$lightSwitch.off();
